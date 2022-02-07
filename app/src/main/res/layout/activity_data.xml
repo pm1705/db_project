@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#9FB1BC"
-    tools:context=".view_db">
+    tools:context=".data">
 
     <Space
         android:layout_width="0px"
@@ -57,12 +57,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5" />
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <Button
+                android:id="@+id/button"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
                 android:layout_weight="45"
-                android:spinnerMode="dialog" />
+                android:onClick="sort_choose"
+                android:text="Button" />
+
         </LinearLayout>
 
         <Space

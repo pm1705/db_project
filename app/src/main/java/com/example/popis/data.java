@@ -1,9 +1,11 @@
 package com.example.popis;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +18,11 @@ import com.example.popis.helperDB.*;
 
 import java.util.ArrayList;
 
+import static com.example.popis.workers.COMPANY;
+import static com.example.popis.workers.FIRST_NAME;
+import static com.example.popis.workers.LAST_NAME;
 import static com.example.popis.workers.TABLE_WORKERS;
+import static com.example.popis.workers.WORKER_ID;
 
 public class data extends AppCompatActivity {
 
@@ -31,6 +37,11 @@ public class data extends AppCompatActivity {
     ArrayAdapter adp;
     ArrayList<String> tbl = new ArrayList<>();
 
+    AlertDialog.Builder sortby;
+    String[] sort_options = {"First Name", "Last Name", "Id", "Company"};
+    String[] sort_helpers = {workers.FIRST_NAME, workers.LAST_NAME, workers.WORKER_ID, workers.COMPANY};
+    String sort_value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +50,25 @@ public class data extends AppCompatActivity {
         input_intent = new Intent(this,add_new.class);
         data_display = (ListView) findViewById(R.id.data_display);
 
+
         hlp = new helperDB(this);
         db = hlp.getWritableDatabase();
         db.close();
 
-        update_data();
+        sort_value = workers.WORKER_ID;
 
+        sortby = new AlertDialog.Builder(this);
+        sortby.setTitle("Sort workers By");
+        sortby.setItems(sort_options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sort_value = sort_helpers[which];
+                update_data(sort_value);
+            }
+        });
+
+
+        update_data(sort_value);
     }
 
     public void back_home(View view) {
@@ -81,23 +105,27 @@ public class data extends AppCompatActivity {
 
             db.close();
 
-            update_data();
+            update_data(sort_value);
         }
     }
 
-    public void update_data(){
+    public void update_data(String sort){
         db = hlp.getWritableDatabase();
         tbl = new ArrayList<>();
 
         crsr = db.query(TABLE_WORKERS, null, null, null, null, null, null);
         int first_name_col = crsr.getColumnIndex(workers.FIRST_NAME);
         int last_name_col = crsr.getColumnIndex(workers.LAST_NAME);
+        int id_col = crsr.getColumnIndex(workers.WORKER_ID);
+        int company_col = crsr.getColumnIndex(workers.COMPANY);
 
         crsr.moveToFirst();
         while (!crsr.isAfterLast()) {
             String first = crsr.getString(first_name_col);
             String last = crsr.getString(last_name_col);
-            String tmp = "" + first + " - " + last;
+            String id = crsr.getString(id_col);
+            String company = crsr.getString(company_col);
+            String tmp = "" + first + " - " + last + " - " + id + " - " + company;
             tbl.add(tmp);
             crsr.moveToNext();
         }
@@ -105,6 +133,12 @@ public class data extends AppCompatActivity {
         db.close();
         adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, tbl);
         data_display.setAdapter(adp);
+
+    }
+
+    public void sort_choose(View view) {
+        AlertDialog sort_now = sortby.create();
+        sort_now.show();
 
     }
 }
