@@ -45,7 +45,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="45"
+                android:layout_weight="35"
                 android:background="#E2C044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
@@ -58,12 +58,31 @@
                 android:layout_weight="5" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/sort_button"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="45"
+                android:layout_height="match_parent"
+                android:layout_weight="35"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:onClick="sort_choose"
-                android:text="Button" />
+                android:text="Key Id"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="18sp"
+                app:backgroundTint="#D3D0CB" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+
+            <ImageButton
+                android:id="@+id/sort_order_button"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:onClick="change_order"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/sort_down_inc" />
 
         </LinearLayout>
 
@@ -82,7 +101,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="45"
+                android:layout_weight="35"
                 android:background="#E2C044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
@@ -94,12 +113,18 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5" />
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/show_button"
+                android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="45"
-                android:spinnerMode="dialog" />
+                android:layout_weight="60"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:onClick="show_choose"
+                android:text="Showing all items"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="18sp"
+                app:backgroundTint="#D3D0CB" />
+
         </LinearLayout>
 
         <Space

@@ -124,7 +124,7 @@
                 android:onClick="back_to_db"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/chevron" />
+                android:src="@drawable/cancel_solid" />
 
             <Space
                 android:layout_width="0dp"
@@ -140,7 +140,7 @@
                 android:onClick="save"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/plus" />
+                android:src="@drawable/check_solid" />
 
         </LinearLayout>
 

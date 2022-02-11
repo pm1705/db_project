@@ -12,6 +12,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.popis.helperDB.*;
@@ -38,9 +41,18 @@ public class data extends AppCompatActivity {
     ArrayList<String> tbl = new ArrayList<>();
 
     AlertDialog.Builder sortby;
-    String[] sort_options = {"First Name", "Last Name", "Id", "Company"};
-    String[] sort_helpers = {workers.FIRST_NAME, workers.LAST_NAME, workers.WORKER_ID, workers.COMPANY};
-    String sort_value;
+    String[] sort_options = {"Card Id", "First Name", "Last Name", "Id"};
+    String[] sort_helpers = {workers.KEY_ID, workers.FIRST_NAME, workers.LAST_NAME, workers.WORKER_ID,};
+
+    String[] show_options = {"Card Id", "First Name", "Last Name", "Company", "Id","Phone Number"};
+    int sort_value, show_count;
+    String sort_order;
+
+    AlertDialog.Builder showthis;
+    int[] show_list = {0,1,2,3,4,6};
+
+    Button sort_button, show_button;
+    ImageButton sort_order_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +67,45 @@ public class data extends AppCompatActivity {
         db = hlp.getWritableDatabase();
         db.close();
 
-        sort_value = workers.WORKER_ID;
+        sort_value = 0;
+        sort_order = "";
+        sort_button = (Button) findViewById(R.id.sort_button);
+        sort_order_button = (ImageButton) findViewById(R.id.sort_order_button);
+
+        show_button = (Button) findViewById(R.id.show_button);
 
         sortby = new AlertDialog.Builder(this);
         sortby.setTitle("Sort workers By");
         sortby.setItems(sort_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                sort_value = sort_helpers[which];
+                sort_value = which;
                 update_data(sort_value);
             }
         });
 
+        showthis = new AlertDialog.Builder(this);
+        showthis.setTitle("Show worker information:");
+        showthis.setMultiChoiceItems(show_options ,null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                if (b){
+                    show_list[i] = i;
+                }
+                else{
+                    show_list[i] = -1;
+                }
+                System.out.println(""+ show_list[0] + " " + show_list[1] + " " + show_list[2] + " " + show_list[3] + " "
+                + show_list[4]);
+            }
+        });
+        showthis.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                update_data(sort_value);
+                dialogInterface.cancel();
+            }
+        });
 
         update_data(sort_value);
     }
@@ -109,26 +148,40 @@ public class data extends AppCompatActivity {
         }
     }
 
-    public void update_data(String sort){
+    public void update_data(int sort){
         db = hlp.getWritableDatabase();
         tbl = new ArrayList<>();
 
-        crsr = db.query(TABLE_WORKERS, null, null, null, null, null, null);
-        int first_name_col = crsr.getColumnIndex(workers.FIRST_NAME);
-        int last_name_col = crsr.getColumnIndex(workers.LAST_NAME);
-        int id_col = crsr.getColumnIndex(workers.WORKER_ID);
-        int company_col = crsr.getColumnIndex(workers.COMPANY);
+        crsr = db.query(TABLE_WORKERS, null, null, null, null, null, sort_helpers[sort] + sort_order);
+
+        sort_button.setText(sort_options[sort]);
+
 
         crsr.moveToFirst();
         while (!crsr.isAfterLast()) {
-            String first = crsr.getString(first_name_col);
-            String last = crsr.getString(last_name_col);
-            String id = crsr.getString(id_col);
-            String company = crsr.getString(company_col);
-            String tmp = "" + first + " - " + last + " - " + id + " - " + company;
+
+            String tmp = "";
+
+            show_count = 0;
+
+            for (int i=0;i<6;i++){
+                if (show_list[i] != -1){
+                    tmp += crsr.getString(i) + " ";
+                    show_count += 1;
+                }
+            }
+
+            if (show_count == 6){
+                show_button.setText("all parameters");
+            }
+            else{
+                show_button.setText("" + show_count + " parameters");
+            }
+
             tbl.add(tmp);
             crsr.moveToNext();
         }
+
         crsr.close();
         db.close();
         adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, tbl);
@@ -139,6 +192,23 @@ public class data extends AppCompatActivity {
     public void sort_choose(View view) {
         AlertDialog sort_now = sortby.create();
         sort_now.show();
+    }
 
+    public void change_order(View view) {
+        if (sort_order == "") {
+            sort_order = " DESC";
+            sort_order_button.setImageResource(R.drawable.sort_down_dec);
+        }
+        else {
+            sort_order = "";
+            sort_order_button.setImageResource(R.drawable.sort_down_inc);
+        }
+        update_data(sort_value);
+    }
+
+    public void show_choose(View view) {
+        show_list = new int[]{-1, -1, -1, -1, -1, -1};
+        AlertDialog show_now = showthis.create();
+        show_now.show();
     }
 }

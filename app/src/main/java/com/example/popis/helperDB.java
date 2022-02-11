@@ -23,7 +23,6 @@ public class helperDB extends SQLiteOpenHelper {
 
         strCreate="CREATE TABLE "+TABLE_WORKERS;
         strCreate+=" ("+KEY_ID+" INTEGER PRIMARY KEY,";
-        strCreate+=" "+CARD_ID+" TEXT,";
         strCreate+=" "+FIRST_NAME+" TEXT,";
         strCreate+=" "+LAST_NAME+" TEXT,";
         strCreate+=" "+COMPANY+" TEXT,";
