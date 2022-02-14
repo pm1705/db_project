@@ -8,4 +8,5 @@ public class workers {
     public static final String COMPANY = "Company";
     public static final String WORKER_ID = "WorkerId";
     public static final String PHONE_NUMBER = "PhoneNumber";
+    public static final String ACTIVE = "ACTIVE";
 }

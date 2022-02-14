@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,7 +28,7 @@ import static com.example.popis.workers.LAST_NAME;
 import static com.example.popis.workers.TABLE_WORKERS;
 import static com.example.popis.workers.WORKER_ID;
 
-public class data extends AppCompatActivity {
+public class data extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     Intent input_intent;
     String first_back,last_back,company_back,worker_id_back,phone_number_back;
@@ -71,8 +72,11 @@ public class data extends AppCompatActivity {
         sort_order = "";
         sort_button = (Button) findViewById(R.id.sort_button);
         sort_order_button = (ImageButton) findViewById(R.id.sort_order_button);
-
         show_button = (Button) findViewById(R.id.show_button);
+
+        data_display.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        data_display.setOnItemClickListener(this);
+
 
         sortby = new AlertDialog.Builder(this);
         sortby.setTitle("Sort workers By");
@@ -121,7 +125,7 @@ public class data extends AppCompatActivity {
     @Override
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
-        if (data_back != null) {
+        if (data_back != null){
             first_back = data_back.getStringExtra("first");
             last_back = data_back.getStringExtra("last");
             company_back = data_back.getStringExtra("company");
@@ -184,6 +188,7 @@ public class data extends AppCompatActivity {
 
         crsr.close();
         db.close();
+
         adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, tbl);
         data_display.setAdapter(adp);
 
@@ -210,5 +215,10 @@ public class data extends AppCompatActivity {
         show_list = new int[]{-1, -1, -1, -1, -1, -1};
         AlertDialog show_now = showthis.create();
         show_now.show();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 }
