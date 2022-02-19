@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import static com.example.popis.workers.*;
+import static com.example.popis.companies.*;
+import static com.example.popis.orders.*;
 
 public class helperDB extends SQLiteOpenHelper {
 
@@ -22,22 +24,52 @@ public class helperDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         strCreate="CREATE TABLE "+TABLE_WORKERS;
-        strCreate+=" ("+KEY_ID+" INTEGER PRIMARY KEY,";
-        strCreate+=" "+FIRST_NAME+" TEXT,";
-        strCreate+=" "+LAST_NAME+" TEXT,";
-        strCreate+=" "+COMPANY+" TEXT,";
-        strCreate+=" "+WORKER_ID+" TEXT,";
-        strCreate+=" "+PHONE_NUMBER+" TEXT";
+        strCreate+=" ("+workers.KEY_ID+" INTEGER PRIMARY KEY,";
+        strCreate+=" "+workers.FIRST_NAME+" TEXT,";
+        strCreate+=" "+workers.LAST_NAME+" TEXT,";
+        strCreate+=" "+workers.COMPANY+" TEXT,";
+        strCreate+=" "+workers.WORKER_ID+" TEXT,";
+        strCreate+=" "+workers.PHONE_NUMBER+" TEXT,";
+        strCreate+=" "+workers.ACTIVE+" INTEGER"; // 0 - active, 1 - inactive
         strCreate+=");";
-        System.out.println(strCreate);
         db.execSQL(strCreate);
 
+        strCreate="CREATE TABLE "+TABLE_COMPANIES;
+        strCreate+=" ("+companies.KEY_ID+" INTEGER PRIMARY KEY,";
+        strCreate+=" "+companies.COMAPNY_NAME+" TEXT,";
+        strCreate+=" "+companies.SERIAL_ID+" TEXT,";
+        strCreate+=" "+companies.PHONE_NUMBER+" TEXT,";
+        strCreate+=" "+companies.SECOND_PHONE_NUMBER+" TEXT,";
+        strCreate+=" "+companies.ACTIVE+" INTEGER"; // 0 - active, 1 - inactive
+        strCreate+=");";
+        db.execSQL(strCreate);
+
+        strCreate="CREATE TABLE "+TABLE_ORDERS;
+        strCreate+=" ("+orders.KEY_ID+" INTEGER PRIMARY KEY,";
+        strCreate+=" "+orders.WORKER_ID+" TEXT,";
+        strCreate+=" "+orders.COMPANY_ID+" TEXT,";
+        strCreate+=" "+orders.TIME+" TEXT,";
+        strCreate+=" "+orders.DATE+" TEXT,";
+        strCreate+=" "+orders.FIRST_COURSE+" TEXT,";
+        strCreate+=" "+orders.SECOND_COURSE+" TEXT,";
+        strCreate+=" "+orders.APPETIZER+" TEXT,";
+        strCreate+=" "+orders.DESSERT+" TEXT,";
+        strCreate+=" "+orders.DRINK+" TEXT,";
+        strCreate+=" "+orders.ACTIVE+" INTEGER"; // 0 - active, 1 - inactive
+        strCreate+=");";
+        db.execSQL(strCreate);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
 
         strDelete="DROP TABLE IF EXISTS "+TABLE_WORKERS;
+        db.execSQL(strDelete);
+
+        strDelete="DROP TABLE IF EXISTS "+TABLE_COMPANIES;
+        db.execSQL(strDelete);
+
+        strDelete="DROP TABLE IF EXISTS "+TABLE_ORDERS;
         db.execSQL(strDelete);
 
         onCreate(db);

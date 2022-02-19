@@ -1,9 +1,5 @@
 package com.example.popis;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,23 +11,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.example.popis.helperDB.*;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-import static com.example.popis.workers.COMPANY;
-import static com.example.popis.workers.FIRST_NAME;
-import static com.example.popis.workers.LAST_NAME;
-import static com.example.popis.workers.TABLE_WORKERS;
-import static com.example.popis.workers.WORKER_ID;
+import static com.example.popis.companies.*;
 
-public class data extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class data_companies extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    Intent input_intent;
-    String first_back,last_back,company_back,worker_id_back,phone_number_back;
+    Intent input_intent, update_intent;
+    String serial_back,name_back,phone1_back,phone2_back;
+    int active_back;
     SQLiteDatabase db;
 
     helperDB hlp;
@@ -39,18 +33,20 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     ListView data_display;
     ArrayAdapter adp;
-    ArrayList<String> tbl = new ArrayList<>();
+    ArrayList<String> tbl;
+    ArrayList<String> ids;
 
     AlertDialog.Builder sortby;
-    String[] sort_options = {"Card Id", "First Name", "Last Name", "Id"};
-    String[] sort_helpers = {workers.KEY_ID, workers.FIRST_NAME, workers.LAST_NAME, workers.WORKER_ID,};
+    String[] sort_options = {"Serial ID", "Company Name"};
+    String[] sort_helpers = {companies.SERIAL_ID, companies.COMAPNY_NAME};
 
-    String[] show_options = {"Card Id", "First Name", "Last Name", "Company", "Id","Phone Number"};
+    String[] show_options = {"Serial ID", "Company Name", "Phone 1", "Phone 2"};
     int sort_value, show_count;
     String sort_order;
 
     AlertDialog.Builder showthis;
-    int[] show_list = {0,1,2,3,4,6};
+    int[] show_list = {1,2,3,4};
+
 
     Button sort_button, show_button;
     ImageButton sort_order_button;
@@ -58,14 +54,16 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_data);
+        setContentView(R.layout.companies_data);
 
         input_intent = new Intent(this,add_new.class);
+        update_intent = new Intent(this,update_remove.class);
         data_display = (ListView) findViewById(R.id.data_display);
 
 
         hlp = new helperDB(this);
         db = hlp.getWritableDatabase();
+        System.out.println(db);
         db.close();
 
         sort_value = 0;
@@ -79,7 +77,7 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
 
 
         sortby = new AlertDialog.Builder(this);
-        sortby.setTitle("Sort workers By");
+        sortby.setTitle("Sort companies By");
         sortby.setItems(sort_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -89,7 +87,7 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
         });
 
         showthis = new AlertDialog.Builder(this);
-        showthis.setTitle("Show worker information:");
+        showthis.setTitle("Show comapny information:");
         showthis.setMultiChoiceItems(show_options ,null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
@@ -99,14 +97,24 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
                 else{
                     show_list[i] = -1;
                 }
-                System.out.println(""+ show_list[0] + " " + show_list[1] + " " + show_list[2] + " " + show_list[3] + " "
-                + show_list[4]);
             }
         });
         showthis.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int k) {
                 update_data(sort_value);
+                show_count = 0;
+                for (int i=1;i<5;i++){
+                    if (show_list[i-1] != -1){
+                        show_count += 1;
+                    }
+                }
+                if (show_count == 4){
+                    show_button.setText("all fields");
+                }
+                else{
+                    show_button.setText("" + show_count + " fields");
+                }
                 dialogInterface.cancel();
             }
         });
@@ -119,6 +127,7 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
     }
 
     public void add_input(View view) {
+        input_intent.putExtra("chosendb",1);
         startActivityForResult(input_intent ,1);
     }
 
@@ -126,25 +135,24 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
         if (data_back != null){
-            first_back = data_back.getStringExtra("first");
-            last_back = data_back.getStringExtra("last");
-            company_back = data_back.getStringExtra("company");
-            worker_id_back = data_back.getStringExtra("worker_id");
-            phone_number_back = data_back.getStringExtra("phone_number");
-            System.out.println(first_back+last_back+company_back+worker_id_back+phone_number_back);
+            name_back = data_back.getStringExtra("name");
+            serial_back = data_back.getStringExtra("serial");
+            phone1_back = data_back.getStringExtra("phone1");
+            phone2_back = data_back.getStringExtra("phone2");
+            active_back = data_back.getIntExtra("active", 0);
 
             ContentValues cv = new ContentValues();
 
-            cv.put(workers.FIRST_NAME, first_back);
-            cv.put(workers.LAST_NAME, last_back);
-            cv.put(workers.COMPANY, company_back);
-            cv.put(workers.WORKER_ID, worker_id_back);
-            cv.put(workers.PHONE_NUMBER, phone_number_back);
+            cv.put(companies.COMAPNY_NAME, name_back);
+            cv.put(companies.SERIAL_ID, serial_back);
+            cv.put(companies.PHONE_NUMBER, phone1_back);
+            cv.put(companies.SECOND_PHONE_NUMBER, phone2_back);
+            cv.put(companies.ACTIVE, active_back);
 
 
             db = hlp.getWritableDatabase();
 
-            db.insert(workers.TABLE_WORKERS, null, cv);
+            db.insert(companies.TABLE_COMPANIES, null, cv);
 
             db.close();
 
@@ -153,10 +161,13 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
     }
 
     public void update_data(int sort){
-        db = hlp.getWritableDatabase();
-        tbl = new ArrayList<>();
 
-        crsr = db.query(TABLE_WORKERS, null, null, null, null, null, sort_helpers[sort] + sort_order);
+        tbl = new ArrayList<>();
+        ids = new ArrayList<>();
+
+        db = hlp.getWritableDatabase();
+        crsr = db.query(TABLE_COMPANIES, null, null, null, null, null, sort_helpers[sort] + sort_order);
+
 
         sort_button.setText(sort_options[sort]);
 
@@ -166,28 +177,27 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
 
             String tmp = "";
 
-            show_count = 0;
-
-            for (int i=0;i<6;i++){
-                if (show_list[i] != -1){
+            for (int i=1;i<5;i++){
+                if (show_list[i-1] != -1){
                     tmp += crsr.getString(i) + " ";
-                    show_count += 1;
                 }
             }
 
-            if (show_count == 6){
-                show_button.setText("all parameters");
+            if (crsr.getInt(5) == 0){
+                tmp += "ACTIVE ";
             }
             else{
-                show_button.setText("" + show_count + " parameters");
+                tmp += "INACTIVE ";
             }
 
+            ids.add(crsr.getString(2));
             tbl.add(tmp);
             crsr.moveToNext();
         }
 
         crsr.close();
         db.close();
+        System.out.println(ids);
 
         adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, tbl);
         data_display.setAdapter(adp);
@@ -212,13 +222,15 @@ public class data extends AppCompatActivity implements AdapterView.OnItemClickLi
     }
 
     public void show_choose(View view) {
-        show_list = new int[]{-1, -1, -1, -1, -1, -1};
+        show_list = new int[]{-1, -1, -1, -1};
         AlertDialog show_now = showthis.create();
         show_now.show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        update_intent.putExtra("id", ids.get(i));
+        update_intent.putExtra("chosendb", 1);
+        startActivityForResult(update_intent ,1);
     }
 }

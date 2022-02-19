@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#9FB1BC"
-    tools:context=".data">
+    tools:context=".data_companies">
 
     <Space
         android:layout_width="0px"
@@ -22,36 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="7"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="20" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="60"
-                android:background="#E2C044"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:gravity="center"
-                android:text="Show In-Active"
-                android:textColor="#5E4F43"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="20" />
-
-        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -144,7 +114,7 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="Show:"
-                android:textColor="#E81123"
+                android:textColor="#5E4F43"
                 android:textSize="18sp" />
 
             <Space
@@ -159,7 +129,7 @@
                 android:layout_weight="60"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:onClick="show_choose"
-                android:text="Showing all items"
+                android:text="all fields"
                 android:textColor="#535353"
                 android:textSize="18sp"
                 app:backgroundTint="#D3D0CB" />

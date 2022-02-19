@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Popis">
         <activity android:name=".update_remove"></activity>
         <activity android:name=".add_new" />
-        <activity android:name=".data" />
+        <activity android:name=".data_workers" />
+        <activity android:name=".data_companies" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

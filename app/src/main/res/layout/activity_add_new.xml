@@ -40,7 +40,7 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/first_input"
+            android:id="@+id/input1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
@@ -54,7 +54,7 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/last_input"
+            android:id="@+id/input2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
@@ -68,7 +68,7 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/company_input"
+            android:id="@+id/input3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
@@ -82,7 +82,7 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/id_input"
+            android:id="@+id/input4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
@@ -96,7 +96,7 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/phone_input"
+            android:id="@+id/input5"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"

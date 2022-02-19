@@ -40,10 +40,10 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/first_input"
+            android:id="@+id/input1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="8"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textPersonName" />
@@ -54,10 +54,10 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/last_input"
+            android:id="@+id/input2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="8"
             android:ems="10"
             android:hint="Last Name"
             android:inputType="textPersonName" />
@@ -68,10 +68,10 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/company_input"
+            android:id="@+id/input3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="8"
             android:ems="10"
             android:hint="Company"
             android:inputType="textPersonName" />
@@ -82,10 +82,10 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/id_input"
+            android:id="@+id/input4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="8"
             android:ems="10"
             android:hint="Worker ID"
             android:inputType="number" />
@@ -96,10 +96,10 @@
             android:layout_weight="3" />
 
         <EditText
-            android:id="@+id/phone_input"
+            android:id="@+id/input5"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="8"
             android:ems="10"
             android:hint="Phone Number"
             android:inputType="number" />
@@ -107,7 +107,39 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8" />
+            android:layout_weight="5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="7"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="25" />
+
+            <Switch
+                android:id="@+id/active_switch"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="50"
+                android:background="#E2C044"
+                android:gravity="center"
+                android:text="ACTIVE" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="25" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6" />
 
         <LinearLayout
             android:layout_width="match_parent"
