@@ -13,7 +13,7 @@ public class add_new extends AppCompatActivity {
 
     Intent send_data;
 
-    int chosendb; // 0 - workers, 1 - company
+    int chosendb; // 0 - workers, 1 - company, 2 - orders
 
     EditText inp1,inp2,inp3,inp4,inp5;
 
@@ -26,11 +26,11 @@ public class add_new extends AppCompatActivity {
 
         chosendb = send_data.getIntExtra("chosendb",0);
 
-        inp1 = (EditText) findViewById(R.id.input1);
+        inp1 = (EditText) findViewById(R.id.input0);
         inp2 = (EditText) findViewById(R.id.input2);
-        inp3 = (EditText) findViewById(R.id.input3);
-        inp4 = (EditText) findViewById(R.id.input4);
-        inp5 = (EditText) findViewById(R.id.input5);
+        inp3 = (EditText) findViewById(R.id.input4);
+        inp4 = (EditText) findViewById(R.id.input5);
+        inp5 = (EditText) findViewById(R.id.input6);
 
         if (chosendb == 0) {
 
@@ -99,7 +99,7 @@ public class add_new extends AppCompatActivity {
             send_data.putExtra("company", inp3.getText().toString());
             send_data.putExtra("worker_id", inp4.getText().toString());
             send_data.putExtra("phone_number", inp5.getText().toString());
-            send_data.putExtra("active", 0);
+            send_data.putExtra("add",1);
             setResult(RESULT_OK, send_data);
             finish();
         }
@@ -119,7 +119,7 @@ public class add_new extends AppCompatActivity {
             send_data.putExtra("serial", inp2.getText().toString());
             send_data.putExtra("phone1", inp3.getText().toString());
             send_data.putExtra("phone2", inp4.getText().toString());
-            send_data.putExtra("active", 0);
+            send_data.putExtra("add",1);
             setResult(RESULT_OK, send_data);
             finish();
         }

@@ -137,6 +137,7 @@
                 android:layout_weight="5"
                 android:background="#D3D0CB"
                 android:contentDescription="TODO"
+                android:onClick="show_orders"
                 android:padding="40dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/hamburger" />
@@ -152,9 +153,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:background="#D3D0CB"
+                android:onClick="add_order"
                 android:padding="40dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/dollar" />
+                android:src="@drawable/plus" />
         </LinearLayout>
 
         <LinearLayout
@@ -172,7 +174,7 @@
                 android:background="#e2c044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
-                android:text="MEALS"
+                android:text="ORDERS"
                 android:textSize="24sp" />
 
             <Space
@@ -188,7 +190,7 @@
                 android:background="#e2c044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
-                android:text="PURCHASES"
+                android:text="ADD ORDER"
                 android:textSize="24sp" />
         </LinearLayout>
 

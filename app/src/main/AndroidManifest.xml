@@ -9,10 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Popis">
-        <activity android:name=".update_remove"></activity>
+        <activity android:name=".meal_reciept"></activity>
+        <activity android:name=".update_remove" />
         <activity android:name=".add_new" />
         <activity android:name=".data_workers" />
         <activity android:name=".data_companies" />
+        <activity android:name=".data_orders" />
+        <activity android:name=".add_new_meal" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#9FB1BC"
-    tools:context=".add_new">
+    tools:context=".add_new_meal">
 
     <Space
         android:layout_width="0px"
@@ -39,14 +39,36 @@
             android:layout_height="0dp"
             android:layout_weight="3" />
 
-        <EditText
-            android:id="@+id/input0"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="0px"
             android:layout_weight="10"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input0"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="45"
+                android:ems="10"
+                android:hint="WORKER ID"
+                android:inputType="number" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10" />
+
+            <EditText
+                android:id="@+id/input1"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="45"
+                android:ems="10"
+                android:hint="COMPANY ID"
+                android:inputType="number" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -59,8 +81,22 @@
             android:layout_height="0dp"
             android:layout_weight="10"
             android:ems="10"
-            android:hint="Last Name"
-            android:inputType="textPersonName" />
+            android:hint="First Course"
+            android:inputType="text" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+
+        <EditText
+            android:id="@+id/input3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:ems="10"
+            android:hint="main Course"
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"
@@ -73,8 +109,8 @@
             android:layout_height="0dp"
             android:layout_weight="10"
             android:ems="10"
-            android:hint="Company"
-            android:inputType="textPersonName" />
+            android:hint="Appetizer"
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"
@@ -87,8 +123,8 @@
             android:layout_height="0dp"
             android:layout_weight="10"
             android:ems="10"
-            android:hint="Worker ID"
-            android:inputType="number" />
+            android:hint="dessert"
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"
@@ -101,8 +137,8 @@
             android:layout_height="0dp"
             android:layout_weight="10"
             android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="number" />
+            android:hint="Drink"
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"

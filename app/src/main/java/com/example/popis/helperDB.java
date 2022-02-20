@@ -49,13 +49,7 @@ public class helperDB extends SQLiteOpenHelper {
         strCreate+=" "+orders.WORKER_ID+" TEXT,";
         strCreate+=" "+orders.COMPANY_ID+" TEXT,";
         strCreate+=" "+orders.TIME+" TEXT,";
-        strCreate+=" "+orders.DATE+" TEXT,";
-        strCreate+=" "+orders.FIRST_COURSE+" TEXT,";
-        strCreate+=" "+orders.SECOND_COURSE+" TEXT,";
-        strCreate+=" "+orders.APPETIZER+" TEXT,";
-        strCreate+=" "+orders.DESSERT+" TEXT,";
-        strCreate+=" "+orders.DRINK+" TEXT,";
-        strCreate+=" "+orders.ACTIVE+" INTEGER"; // 0 - active, 1 - inactive
+        strCreate+=" "+orders.MEAL_DETAILS+" TEXT";
         strCreate+=");";
         db.execSQL(strCreate);
     }

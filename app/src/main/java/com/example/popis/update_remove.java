@@ -2,6 +2,7 @@ package com.example.popis;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,7 +22,7 @@ public class update_remove extends AppCompatActivity {
 
     Intent come;
     EditText inp1,inp2,inp3,inp4,inp5;
-    String id;
+    String key;
 
     int chosendb; // 0 - workers, 1 - company
 
@@ -37,7 +38,7 @@ public class update_remove extends AppCompatActivity {
         setContentView(R.layout.activity_update_remove);
 
         come = getIntent();
-        id = come.getStringExtra("id");
+        key = come.getStringExtra("key");
 
         hlp = new helperDB(this);
         db = hlp.getWritableDatabase();
@@ -45,11 +46,11 @@ public class update_remove extends AppCompatActivity {
 
         chosendb = come.getIntExtra("chosendb",0);
 
-        inp1 = (EditText) findViewById(R.id.input1);
+        inp1 = (EditText) findViewById(R.id.input0);
         inp2 = (EditText) findViewById(R.id.input2);
-        inp3 = (EditText) findViewById(R.id.input3);
-        inp4 = (EditText) findViewById(R.id.input4);
-        inp5 = (EditText) findViewById(R.id.input5);
+        inp3 = (EditText) findViewById(R.id.input4);
+        inp4 = (EditText) findViewById(R.id.input5);
+        inp5 = (EditText) findViewById(R.id.input6);
 
         active_switch = (Switch) findViewById(R.id.active_switch);
         active_switch.setChecked(true);
@@ -72,7 +73,7 @@ public class update_remove extends AppCompatActivity {
             inp5.setInputType(InputType.TYPE_CLASS_NUMBER);
             inp5.setHint("Phone Number");
 
-            crsr = db.query(TABLE_WORKERS, null, WORKER_ID+"=?", new String[] {id}, null, null, null, null);
+            crsr = db.query(TABLE_WORKERS, null, workers.KEY_ID+"=?", new String[] {key}, null, null, null, null);
 
             crsr.moveToFirst();
             inp1.setText(crsr.getString(1));
@@ -97,7 +98,7 @@ public class update_remove extends AppCompatActivity {
 
             inp5.setVisibility(View.INVISIBLE);
 
-            crsr = db.query(TABLE_COMPANIES, null, SERIAL_ID+"=?", new String[] {id}, null, null, null, null);
+            crsr = db.query(TABLE_COMPANIES, null, companies.KEY_ID+"=?", new String[] {key}, null, null, null, null);
             crsr.moveToFirst();
             inp1.setText(crsr.getString(1));
             inp2.setText(crsr.getString(2));
@@ -136,21 +137,28 @@ public class update_remove extends AppCompatActivity {
             Toast.makeText(this, "Enter a valid phone number", Toast.LENGTH_SHORT).show();
         }
         else {
-            db = hlp.getWritableDatabase();
-            db.delete(TABLE_WORKERS, WORKER_ID+"=?", new String[]{id});
-            db.close();
-            come.putExtra("first", inp1.getText().toString());
-            come.putExtra("last", inp2.getText().toString());
-            come.putExtra("company", inp3.getText().toString());
-            come.putExtra("worker_id", inp4.getText().toString());
-            come.putExtra("phone_number", inp5.getText().toString());
+            ContentValues cv = new ContentValues();
+
+            cv.put(workers.FIRST_NAME, inp1.getText().toString());
+            cv.put(workers.LAST_NAME, inp2.getText().toString());
+            cv.put(workers.COMPANY, inp3.getText().toString());
+            cv.put(workers.WORKER_ID, inp4.getText().toString());
+            cv.put(workers.PHONE_NUMBER, inp5.getText().toString());
             if (active_switch.isChecked()){
-                come.putExtra("active", 0);
+                cv.put(workers.ACTIVE, 0);
             }
             else{
-                come.putExtra("active", 1);
+                cv.put(workers.ACTIVE, 1);
             }
+
+
+            db = hlp.getWritableDatabase();
+            db.update(TABLE_WORKERS, cv, workers.KEY_ID+"=?", new String[]{key});
+            db.close();
+
+            come.putExtra("add",0);
             setResult(RESULT_OK, come);
+
             finish();
         }
 
@@ -165,19 +173,25 @@ public class update_remove extends AppCompatActivity {
             Toast.makeText(this, "Enter valid phone Numbers", Toast.LENGTH_SHORT).show();
         }
         else {
-            db = hlp.getWritableDatabase();
-            db.delete(TABLE_COMPANIES, SERIAL_ID+"=?", new String[]{id});
-            db.close();
-            come.putExtra("name", inp1.getText().toString());
-            come.putExtra("serial", inp2.getText().toString());
-            come.putExtra("phone1", inp3.getText().toString());
-            come.putExtra("phone2", inp4.getText().toString());
+
+            ContentValues cv = new ContentValues();
+
+            cv.put(companies.COMAPNY_NAME, inp1.getText().toString());
+            cv.put(companies.SERIAL_ID, inp2.getText().toString());
+            cv.put(companies.PHONE_NUMBER, inp3.getText().toString());
+            cv.put(companies.SECOND_PHONE_NUMBER, inp4.getText().toString());
             if (active_switch.isChecked()){
-                come.putExtra("active", 0);
+                cv.put(companies.ACTIVE, 0);
             }
             else{
-                come.putExtra("active", 1);
+                cv.put(companies.ACTIVE, 1);
             }
+
+            db = hlp.getWritableDatabase();
+            db.update(TABLE_COMPANIES, cv, companies.KEY_ID+"=?", new String[]{key});
+            db.close();
+
+            come.putExtra("add",0);
             setResult(RESULT_OK, come);
             finish();
         }

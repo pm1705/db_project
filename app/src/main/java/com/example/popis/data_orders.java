@@ -13,19 +13,23 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import java.time.DayOfWeek;
+import java.util.Calendar;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-import static com.example.popis.companies.*;
+import static com.example.popis.orders.TABLE_ORDERS;
 
-public class data_companies extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class data_orders extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    Intent input_intent, update_intent;
-    String serial_back,name_back,phone1_back,phone2_back;
-    int add_back;
+    Intent input_intent, receipt_intent;
+    String worker_id_back,company_id_back,meal_details;
+    int active_back;
     SQLiteDatabase db;
 
     helperDB hlp;
@@ -34,18 +38,18 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
     ListView data_display;
     ArrayAdapter adp;
     ArrayList<String> tbl;
-    ArrayList<String> keys;
+    ArrayList<String> ids;
 
     AlertDialog.Builder sortby;
-    String[] sort_options = {"Serial ID", "Company Name"};
-    String[] sort_helpers = {companies.SERIAL_ID, companies.COMAPNY_NAME};
+    String[] sort_options = {"Date", "Name"};
+    String[] sort_helpers = {orders.KEY_ID, orders.WORKER_ID};
 
-    String[] show_options = {"Serial ID", "Company Name", "Phone 1", "Phone 2"};
+    String[] show_options = {"Worker ID", "Company ID", "Time"};
     int sort_value, show_count;
     String sort_order;
 
     AlertDialog.Builder showthis;
-    int[] show_list = {1,2,3,4};
+    int[] show_list = {1,2,3};
 
 
     Button sort_button, show_button;
@@ -54,16 +58,14 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.companies_data);
+        setContentView(R.layout.orders_data);
 
-        input_intent = new Intent(this,add_new.class);
-        update_intent = new Intent(this,update_remove.class);
+        input_intent = new Intent(this,add_new_meal.class);
+        receipt_intent = new Intent(this,meal_reciept.class);
         data_display = (ListView) findViewById(R.id.data_display);
-
 
         hlp = new helperDB(this);
         db = hlp.getWritableDatabase();
-        System.out.println(db);
         db.close();
 
         sort_value = 0;
@@ -77,7 +79,7 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
 
 
         sortby = new AlertDialog.Builder(this);
-        sortby.setTitle("Sort companies By");
+        sortby.setTitle("Sort Orders By");
         sortby.setItems(sort_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -87,7 +89,7 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
         });
 
         showthis = new AlertDialog.Builder(this);
-        showthis.setTitle("Show comapny information:");
+        showthis.setTitle("Show order information:");
         showthis.setMultiChoiceItems(show_options ,null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i, boolean b) {
@@ -104,12 +106,12 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
             public void onClick(DialogInterface dialogInterface, int k) {
                 update_data(sort_value);
                 show_count = 0;
-                for (int i=1;i<5;i++){
+                for (int i=1;i<4;i++){
                     if (show_list[i-1] != -1){
                         show_count += 1;
                     }
                 }
-                if (show_count == 4){
+                if (show_count == 3){
                     show_button.setText("all fields");
                 }
                 else{
@@ -127,36 +129,37 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void add_input(View view) {
-        input_intent.putExtra("chosendb",1);
+        input_intent.putExtra("chosendb",2);
         startActivityForResult(input_intent ,1);
     }
 
     @Override
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
+        System.out.println(data_back);
         if (data_back != null){
-            add_back = data_back.getIntExtra("add", 0);
-            if (add_back == 1){
-                name_back = data_back.getStringExtra("name");
-                serial_back = data_back.getStringExtra("serial");
-                phone1_back = data_back.getStringExtra("phone1");
-                phone2_back = data_back.getStringExtra("phone2");
+            worker_id_back = data_back.getStringExtra("worker_id");
+            company_id_back = data_back.getStringExtra("company_id");
+            meal_details = data_back.getStringExtra("mealDetails");
+            System.out.println(meal_details);
 
-                ContentValues cv = new ContentValues();
+            ContentValues cv = new ContentValues();
 
-                cv.put(companies.COMAPNY_NAME, name_back);
-                cv.put(companies.SERIAL_ID, serial_back);
-                cv.put(companies.PHONE_NUMBER, phone1_back);
-                cv.put(companies.SECOND_PHONE_NUMBER, phone2_back);
-                cv.put(companies.ACTIVE, 0);
+            Date currentTime = Calendar.getInstance().getTime();
+
+            cv.put(orders.WORKER_ID, worker_id_back);
+            cv.put(orders.COMPANY_ID, company_id_back);
+            cv.put(orders.TIME, currentTime.toString());
+            cv.put(orders.MEAL_DETAILS, meal_details);
+
+            db = hlp.getWritableDatabase();
 
 
-                db = hlp.getWritableDatabase();
 
-                db.insert(companies.TABLE_COMPANIES, null, cv);
+            db.insert(TABLE_ORDERS, null, cv);
 
-                db.close();
-            }
+            db.close();
+
             update_data(sort_value);
         }
     }
@@ -164,10 +167,10 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
     public void update_data(int sort){
 
         tbl = new ArrayList<>();
-        keys = new ArrayList<>();
+        ids = new ArrayList<>();
 
         db = hlp.getWritableDatabase();
-        crsr = db.query(TABLE_COMPANIES, null, null, null, null, null, sort_helpers[sort] + sort_order);
+        crsr = db.query(TABLE_ORDERS, null, null, null, null, null, sort_helpers[sort] + sort_order);
 
 
         sort_button.setText(sort_options[sort]);
@@ -176,29 +179,21 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
         crsr.moveToFirst();
         while (!crsr.isAfterLast()) {
 
-            String tmp = "";
+            String tmp = crsr.getString(0) + ") ";
 
-            for (int i=1;i<5;i++){
+            for (int i=1;i<4;i++){
                 if (show_list[i-1] != -1){
                     tmp += crsr.getString(i) + " ";
                 }
             }
 
-            if (crsr.getInt(5) == 0){
-                tmp += "ACTIVE ";
-            }
-            else{
-                tmp += "INACTIVE ";
-            }
-
-            keys.add(crsr.getString(0));
+            ids.add(crsr.getString(1));
             tbl.add(tmp);
             crsr.moveToNext();
         }
 
         crsr.close();
         db.close();
-        System.out.println(keys);
 
         adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, tbl);
         data_display.setAdapter(adp);
@@ -223,15 +218,15 @@ public class data_companies extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void show_choose(View view) {
-        show_list = new int[]{-1, -1, -1, -1};
+        show_list = new int[]{-1, -1, -1};
         AlertDialog show_now = showthis.create();
         show_now.show();
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        update_intent.putExtra("key", keys.get(i));
-        update_intent.putExtra("chosendb", 1);
-        startActivityForResult(update_intent, 1);
+        System.out.println(ids.get(i));
+        receipt_intent.putExtra("id", ids.get(i));
+        startActivity(receipt_intent);
     }
 }

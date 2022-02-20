@@ -25,7 +25,7 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
 
     Intent input_intent, update_intent;
     String first_back,last_back,company_back,worker_id_back,phone_number_back;
-    int active_back;
+    int add_back;
     SQLiteDatabase db;
 
     helperDB hlp;
@@ -34,7 +34,7 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
     ListView data_display;
     ArrayAdapter adp;
     ArrayList<String> tbl;
-    ArrayList<String> ids;
+    ArrayList<String> keys;
 
     AlertDialog.Builder sortby;
     String[] sort_options = {"Card Id", "First Name", "Last Name", "Id"};
@@ -134,29 +134,30 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
         if (data_back != null){
-            first_back = data_back.getStringExtra("first");
-            last_back = data_back.getStringExtra("last");
-            company_back = data_back.getStringExtra("company");
-            worker_id_back = data_back.getStringExtra("worker_id");
-            phone_number_back = data_back.getStringExtra("phone_number");
-            active_back = data_back.getIntExtra("active", 0);
+            add_back = data_back.getIntExtra("add", 0);
+            if (add_back == 1){
+                first_back = data_back.getStringExtra("first");
+                last_back = data_back.getStringExtra("last");
+                company_back = data_back.getStringExtra("company");
+                worker_id_back = data_back.getStringExtra("worker_id");
+                phone_number_back = data_back.getStringExtra("phone_number");
 
-            ContentValues cv = new ContentValues();
+                ContentValues cv = new ContentValues();
 
-            cv.put(workers.FIRST_NAME, first_back);
-            cv.put(workers.LAST_NAME, last_back);
-            cv.put(workers.COMPANY, company_back);
-            cv.put(workers.WORKER_ID, worker_id_back);
-            cv.put(workers.PHONE_NUMBER, phone_number_back);
-            cv.put(workers.ACTIVE, active_back);
+                cv.put(workers.FIRST_NAME, first_back);
+                cv.put(workers.LAST_NAME, last_back);
+                cv.put(workers.COMPANY, company_back);
+                cv.put(workers.WORKER_ID, worker_id_back);
+                cv.put(workers.PHONE_NUMBER, phone_number_back);
+                cv.put(workers.ACTIVE, 0);
 
 
-            db = hlp.getWritableDatabase();
+                db = hlp.getWritableDatabase();
 
-            db.insert(workers.TABLE_WORKERS, null, cv);
+                db.insert(workers.TABLE_WORKERS, null, cv);
 
-            db.close();
-
+                db.close();
+            }
             update_data(sort_value);
         }
     }
@@ -164,7 +165,7 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
     public void update_data(int sort){
 
         tbl = new ArrayList<>();
-        ids = new ArrayList<>();
+        keys = new ArrayList<>();
 
         db = hlp.getWritableDatabase();
         crsr = db.query(TABLE_WORKERS, null, null, null, null, null, sort_helpers[sort] + sort_order);
@@ -191,7 +192,7 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
                 tmp += "INACTIVE ";
             }
 
-            ids.add(crsr.getString(4));
+            keys.add(crsr.getString(0));
             tbl.add(tmp);
             crsr.moveToNext();
         }
@@ -229,8 +230,8 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        update_intent.putExtra("id", ids.get(i));
+        update_intent.putExtra("key", keys.get(i));
         update_intent.putExtra("chosendb", 0);
-        startActivityForResult(update_intent ,1);
+        startActivityForResult(update_intent, 1);
     }
 }
