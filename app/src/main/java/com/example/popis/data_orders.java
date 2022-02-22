@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,8 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.time.DayOfWeek;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -28,7 +29,7 @@ import static com.example.popis.orders.TABLE_ORDERS;
 public class data_orders extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     Intent input_intent, receipt_intent;
-    String worker_id_back,company_id_back,meal_details;
+    String card_id_back,company_id_back,meal_details;
     int active_back;
     SQLiteDatabase db;
 
@@ -42,7 +43,7 @@ public class data_orders extends AppCompatActivity implements AdapterView.OnItem
 
     AlertDialog.Builder sortby;
     String[] sort_options = {"Date", "Name"};
-    String[] sort_helpers = {orders.KEY_ID, orders.WORKER_ID};
+    String[] sort_helpers = {orders.KEY_ID, orders.WORKER_CARD_ID};
 
     String[] show_options = {"Worker ID", "Company ID", "Time"};
     int sort_value, show_count;
@@ -138,18 +139,18 @@ public class data_orders extends AppCompatActivity implements AdapterView.OnItem
         super.onActivityResult(source, good, data_back);
         System.out.println(data_back);
         if (data_back != null){
-            worker_id_back = data_back.getStringExtra("worker_id");
+            card_id_back = data_back.getStringExtra("card_id");
             company_id_back = data_back.getStringExtra("company_id");
             meal_details = data_back.getStringExtra("mealDetails");
             System.out.println(meal_details);
 
             ContentValues cv = new ContentValues();
 
-            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-            cv.put(orders.WORKER_ID, worker_id_back);
+            cv.put(orders.WORKER_CARD_ID, card_id_back);
             cv.put(orders.COMPANY_ID, company_id_back);
-            cv.put(orders.TIME, currentTime.toString());
+            cv.put(orders.TIME, formatter.toString());
             cv.put(orders.MEAL_DETAILS, meal_details);
 
             db = hlp.getWritableDatabase();
@@ -228,5 +229,26 @@ public class data_orders extends AppCompatActivity implements AdapterView.OnItem
         System.out.println(ids.get(i));
         receipt_intent.putExtra("id", ids.get(i));
         startActivity(receipt_intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.credits){
+            Intent creds = new Intent(this,creditscreen.class);
+            startActivity(creds);
+        }
+
+        else if (id == R.id.home){
+            finish();
+        }
+
+        return true;
     }
 }

@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -233,5 +235,26 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
         update_intent.putExtra("key", keys.get(i));
         update_intent.putExtra("chosendb", 0);
         startActivityForResult(update_intent, 1);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.credits){
+            Intent creds = new Intent(this,creditscreen.class);
+            startActivity(creds);
+        }
+
+        else if (id == R.id.home){
+            finish();
+        }
+
+        return true;
     }
 }

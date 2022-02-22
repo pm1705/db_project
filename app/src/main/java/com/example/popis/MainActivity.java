@@ -7,8 +7,11 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,7 +20,7 @@ import static com.example.popis.orders.*;
 public class MainActivity extends AppCompatActivity {
 
     Intent worker_intent, company_intent, orders_intent, add_intent;
-    String worker_id_back,company_id_back,meal_details;
+    String card_id_back,company_id_back,meal_details;
 
     SQLiteDatabase db;
     helperDB hlp;
@@ -52,18 +55,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(source, good, data_back);
         System.out.println(data_back);
         if (data_back != null){
-            worker_id_back = data_back.getStringExtra("worker_id");
+            card_id_back = data_back.getStringExtra("card_id");
             company_id_back = data_back.getStringExtra("company_id");
             meal_details = data_back.getStringExtra("mealDetails");
             System.out.println(meal_details);
 
             ContentValues cv = new ContentValues();
 
-            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
-            cv.put(orders.WORKER_ID, worker_id_back);
+            cv.put(orders.WORKER_CARD_ID, card_id_back);
             cv.put(orders.COMPANY_ID, company_id_back);
-            cv.put(orders.TIME, currentTime.toString());
+            cv.put(orders.TIME, formatter.toString());
             cv.put(orders.MEAL_DETAILS, meal_details);
 
             db = hlp.getWritableDatabase();
@@ -74,5 +77,27 @@ public class MainActivity extends AppCompatActivity {
 
             db.close();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.credits){
+            Intent creds = new Intent(this,creditscreen.class);
+            startActivity(creds);
+        }
+
+        else if (id == R.id.home){
+            Intent home = new Intent(this,MainActivity.class);
+            startActivity(home);
+        }
+
+        return true;
     }
 }

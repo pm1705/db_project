@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import static com.example.popis.orders.TABLE_ORDERS;
-import static com.example.popis.orders.WORKER_ID;
 
 public class meal_reciept extends AppCompatActivity {
 
@@ -42,7 +41,7 @@ public class meal_reciept extends AppCompatActivity {
         System.out.println(id);
 
         db = hlp.getWritableDatabase();
-        crsr = db.query(TABLE_ORDERS, null, WORKER_ID+"=?", new String[] {id}, null, null, null, "1");
+        crsr = db.query(TABLE_ORDERS, null, orders.WORKER_CARD_ID+"=?", new String[] {id}, null, null, null, "1");
         crsr.moveToFirst();
 
         compTitle.setText("RECEIPT:\n\tworker:" + crsr.getString(1) + "\n\tsupplier:" + crsr.getString(2));

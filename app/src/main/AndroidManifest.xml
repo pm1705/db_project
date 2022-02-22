@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Popis">
-        <activity android:name=".meal_reciept"></activity>
+        <activity android:name=".creditscreen"></activity>
+        <activity android:name=".meal_reciept" />
         <activity android:name=".update_remove" />
         <activity android:name=".add_new" />
         <activity android:name=".data_workers" />

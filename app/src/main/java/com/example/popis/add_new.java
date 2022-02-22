@@ -71,6 +71,25 @@ public class add_new extends AppCompatActivity {
         finish();
     }
 
+    public boolean is_valid_id(String str){
+        int last_dig = Integer.parseInt(String.valueOf(str.charAt(8)));
+        int sum = 0;
+        for (int i=0;i<8;i+=2){
+            sum = sum + Integer.parseInt(String.valueOf(str.charAt(i))) * 1;
+            if (Integer.parseInt(String.valueOf(str.charAt(i+1))) * 2 < 10){
+                sum = sum + Integer.parseInt(String.valueOf(str.charAt(i+1))) * 2;
+            }
+            else{
+                sum = sum + 1;
+                sum = sum + (Integer.parseInt(String.valueOf(str.charAt(i+1))) * 2)-10;
+            }
+        }
+        if (((last_dig) + sum)%10 == 0){
+            return true;
+        }
+        return false;
+    }
+
     public void save(View view) {
         if (chosendb == 0) {
             save_worker(view);
@@ -92,6 +111,9 @@ public class add_new extends AppCompatActivity {
         }
         else if (inp5.getText().toString().length() != 10 && inp5.getText().toString().length() != 9){
             Toast.makeText(this, "Enter a valid phone number", Toast.LENGTH_SHORT).show();
+        }
+        else if (!is_valid_id(inp4.getText().toString())){
+            Toast.makeText(this, "Enter a valid id number", Toast.LENGTH_SHORT).show();
         }
         else {
             send_data.putExtra("first", inp1.getText().toString());

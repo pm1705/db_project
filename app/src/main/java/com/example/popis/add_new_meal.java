@@ -13,9 +13,7 @@ public class add_new_meal extends AppCompatActivity {
 
     Intent send_data;
 
-    int chosendb; // 0 - workers, 1 - company, 2 - orders
-
-    EditText worker_id,company_id,firstCourse,mainCourse,appetizer,dessert,drink;
+    EditText card_id,company_id,firstCourse,mainCourse,appetizer,dessert,drink;
     String mealDetails;
 
     @Override
@@ -27,7 +25,7 @@ public class add_new_meal extends AppCompatActivity {
 
         mealDetails = "";
 
-        worker_id = (EditText) findViewById(R.id.input0);
+        card_id = (EditText) findViewById(R.id.input0);
         company_id = (EditText) findViewById(R.id.input1);
         firstCourse = (EditText) findViewById(R.id.input2);
         mainCourse = (EditText) findViewById(R.id.input3);
@@ -47,17 +45,17 @@ public class add_new_meal extends AppCompatActivity {
                 && drink.getText().toString().matches("")){
             Toast.makeText(this, "fill at least one meal detail", Toast.LENGTH_SHORT).show();
         }
-        else if (worker_id.getText().toString().length() != 9 || company_id.getText().toString().length() != 6){
+        else if (company_id.getText().toString().length() != 6 || card_id.getText().toString().matches("")){
             Toast.makeText(this, "Enter valid ids", Toast.LENGTH_SHORT).show();
         }
         else {
-            mealDetails += firstCourse.getText().toString() + "\n";
-            mealDetails += mainCourse.getText().toString() + "\n";
-            mealDetails += appetizer.getText().toString() + "\n";
-            mealDetails += dessert.getText().toString() + "\n";
-            mealDetails += drink.getText().toString();
+            mealDetails += " First Course: " + firstCourse.getText().toString() + "\n";
+            mealDetails += " Main Course: " + mainCourse.getText().toString() + "\n";
+            mealDetails += " Appetizer: " + appetizer.getText().toString() + "\n";
+            mealDetails += " Dessert: " + dessert.getText().toString() + "\n";
+            mealDetails += " Drink: " + drink.getText().toString();
 
-            send_data.putExtra("worker_id", worker_id.getText().toString());
+            send_data.putExtra("card_id", card_id.getText().toString());
             send_data.putExtra("company_id", company_id.getText().toString());
             send_data.putExtra("mealDetails", mealDetails);
             setResult(RESULT_OK, send_data);
