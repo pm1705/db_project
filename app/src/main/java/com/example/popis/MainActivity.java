@@ -17,6 +17,12 @@ import java.util.Date;
 
 import static com.example.popis.orders.*;
 
+/**
+ * @author paz malul
+ *
+ * the home of the app, enetr all hubs + a quick access button to add a new order.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     Intent worker_intent, company_intent, orders_intent, add_intent;
@@ -40,16 +46,38 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
+    /**
+     * enter worker hub
+     * @param view
+     */
     public void show_workers(View view) {
         startActivity(worker_intent);
     }
 
+    /**
+     * enter company hub
+     * @param view
+     */
     public void show_companies(View view) { startActivity(company_intent); }
 
+    /**
+     * enter orders hub
+     * @param view
+     */
     public void show_orders(View view) { startActivity(orders_intent); }
 
+    /**
+     * quick access to add a new order
+     * @param view
+     */
     public void add_order(View view) {  startActivityForResult(add_intent, 0); }
 
+    /**
+     * add the info from the add_new_meal activity
+     * @param source
+     * @param good
+     * @param data_back
+     */
     @Override
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
@@ -79,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * menu funcs
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main, menu);
@@ -91,11 +124,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.credits){
             Intent creds = new Intent(this,creditscreen.class);
             startActivity(creds);
-        }
-
-        else if (id == R.id.home){
-            Intent home = new Intent(this,MainActivity.class);
-            startActivity(home);
         }
 
         return true;

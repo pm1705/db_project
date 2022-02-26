@@ -7,15 +7,25 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+/**
+ * @author paz malul
+ *
+ * when sent to this activity the user can enter data on one of 2 options
+ * workers or companies, which will be checked for inaccuracies and added to the according databace
+ */
 
 public class add_new extends AppCompatActivity {
 
     Intent send_data;
 
-    int chosendb; // 0 - workers, 1 - company, 2 - orders
+    TextView tv; // will be changed according to the chosen database
 
-    EditText inp1,inp2,inp3,inp4,inp5;
+    int chosendb; // 0 - workers, 1 - company
+
+    EditText inp1,inp2,inp3,inp4,inp5; // input fields that are used accordingly with the chosen database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +42,12 @@ public class add_new extends AppCompatActivity {
         inp4 = (EditText) findViewById(R.id.input5);
         inp5 = (EditText) findViewById(R.id.input6);
 
+        tv = (TextView) findViewById(R.id.new_title);
+
+        // set all layout attributes according to database
         if (chosendb == 0) {
+
+            tv.setText("New Worker");
 
             inp1.setInputType(InputType.TYPE_CLASS_TEXT);
             inp1.setHint("First Name");
@@ -51,6 +66,8 @@ public class add_new extends AppCompatActivity {
         }
         else if (chosendb == 1){
 
+            tv.setText("New Company");
+
             inp1.setInputType(InputType.TYPE_CLASS_TEXT);
             inp1.setHint("Company Name");
 
@@ -67,10 +84,21 @@ public class add_new extends AppCompatActivity {
         }
     }
 
+    /**
+     * return to the database you came from
+     * @param view
+     */
     public void back_to_db(View view) {
         finish();
     }
 
+    /**
+     * i made this function and an very proud of it thank you!
+     * taking a string id and checking if the first 8 characters match to the last digit according to the
+     * rules set by our beloved government.
+     * @param str the id in string form
+     * @return true if the id is valid
+     */
     public boolean is_valid_id(String str){
         int last_dig = Integer.parseInt(String.valueOf(str.charAt(8)));
         int sum = 0;
@@ -82,6 +110,7 @@ public class add_new extends AppCompatActivity {
             else{
                 sum = sum + 1;
                 sum = sum + (Integer.parseInt(String.valueOf(str.charAt(i+1))) * 2)-10;
+
             }
         }
         if (((last_dig) + sum)%10 == 0){
@@ -90,6 +119,10 @@ public class add_new extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * send to the according save function
+     * @param view
+     */
     public void save(View view) {
         if (chosendb == 0) {
             save_worker(view);
@@ -99,6 +132,10 @@ public class add_new extends AppCompatActivity {
         }
     }
 
+    /**
+     * check if the input matches up with the rules and send back to the database activity
+     * @param view
+     */
     public void save_worker(View view) {
         if (inp1.getText().toString().matches("") || inp2.getText().toString().matches("") ||
                 inp3.getText().toString().matches("") || inp4.getText().toString().matches("") ||
@@ -128,6 +165,10 @@ public class add_new extends AppCompatActivity {
 
     }
 
+    /**
+     * check if the input matches up with the rules and send back to the database activity
+     * @param view
+     */
     public void save_company(View view) {
         if (inp1.getText().toString().matches("") || inp2.getText().toString().matches("") ||
                 inp3.getText().toString().matches("") || inp4.getText().toString().matches("")){

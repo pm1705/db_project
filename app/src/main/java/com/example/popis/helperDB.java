@@ -10,6 +10,12 @@ import static com.example.popis.workers.*;
 import static com.example.popis.companies.*;
 import static com.example.popis.orders.*;
 
+/**
+ * @author paz malul
+ *
+ * a helper class that manages all databses
+ */
+
 public class helperDB extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "dbexam.db";

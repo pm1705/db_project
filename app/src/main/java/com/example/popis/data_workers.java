@@ -23,6 +23,12 @@ import java.util.ArrayList;
 
 import static com.example.popis.workers.TABLE_WORKERS;
 
+/**
+ * @author paz malul
+ *
+ * a hub for displaying, sorting, adding, and updating the databse of the workers.
+ */
+
 public class data_workers extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     Intent input_intent, update_intent;
@@ -39,7 +45,7 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
     ArrayList<String> keys;
 
     AlertDialog.Builder sortby;
-    String[] sort_options = {"Card Id", "First Name", "Last Name", "Id"};
+    String[] sort_options = {"Card Id", "First", "Last", "Id"};
     String[] sort_helpers = {workers.KEY_ID, workers.FIRST_NAME, workers.LAST_NAME, workers.WORKER_ID,};
 
     String[] show_options = {"First Name", "Last Name", "Company", "Id","Phone Number"};
@@ -123,15 +129,32 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
         update_data(sort_value);
     }
 
+    /**
+     * return to home screen
+     * @param view
+     */
     public void back_home(View view) {
         finish();
     }
 
+    /**
+     * launch add_new activity with 0 paramater meaning we want to add a worker
+     * @param view
+     */
     public void add_input(View view) {
         input_intent.putExtra("chosendb",0);
         startActivityForResult(input_intent ,1);
     }
 
+    /**
+     * this function will be called from two diffrent activities
+     * if called from the add_new activity the information sent will be added to the db as a new line
+     * if from the update_remove activity the information was already updated so nothing will happen
+     * except the update data so all displayed data is up to date.
+     * @param source i couldn't understand how this worked so i added an extra for what activity
+     * @param good
+     * @param data_back
+     */
     @Override
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
@@ -164,6 +187,10 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * sort the database according to the sort list, show only the wanted fields and display them in table.
+     * @param sort the sort list
+     */
     public void update_data(int sort){
 
         tbl = new ArrayList<>();
@@ -207,11 +234,19 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    /**
+     * bring up dialog box to choose sorting options
+     * @param view
+     */
     public void sort_choose(View view) {
         AlertDialog sort_now = sortby.create();
         sort_now.show();
     }
 
+    /**
+     * flips the current sorting order from a->z or z->a
+     * @param view
+     */
     public void change_order(View view) {
         if (sort_order == "") {
             sort_order = " DESC";
@@ -224,18 +259,35 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
         update_data(sort_value);
     }
 
+    /**
+     * reset all show variables and launch dialog to choose them again
+     * @param view
+     */
     public void show_choose(View view) {
         show_list = new int[]{-1, -1, -1, -1, -1};
         AlertDialog show_now = showthis.create();
         show_now.show();
     }
 
+    /**
+     * when item is clicked send the paramaters to the update activity
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         update_intent.putExtra("key", keys.get(i));
         update_intent.putExtra("chosendb", 0);
         startActivityForResult(update_intent, 1);
     }
+
+    /**
+     * menu funcs
+     * @param menu
+     * @return
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){

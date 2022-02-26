@@ -11,18 +11,26 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.popis.workers.*;
 
 import static com.example.popis.companies.*;
 
+/**
+ * @author paz malul
+ *
+ * when sent to this activity the user can update data on one of 2 options
+ * workers or companies, which will be checked for inaccuracies and added to the according databace
+ */
 
 public class update_remove extends AppCompatActivity {
 
     Intent come;
     EditText inp1,inp2,inp3,inp4,inp5;
     String key;
+    TextView tv;
 
     int chosendb; // 0 - workers, 1 - company
 
@@ -52,12 +60,16 @@ public class update_remove extends AppCompatActivity {
         inp4 = (EditText) findViewById(R.id.input5);
         inp5 = (EditText) findViewById(R.id.input6);
 
+        tv = (TextView) findViewById(R.id.new_title);
+
         active_switch = (Switch) findViewById(R.id.active_switch);
         active_switch.setChecked(true);
 
         db = hlp.getWritableDatabase();
 
         if (chosendb == 0) {
+            tv.setText("Update Worker");
+
             inp1.setInputType(InputType.TYPE_CLASS_TEXT);
             inp1.setHint("First Name");
 
@@ -84,6 +96,8 @@ public class update_remove extends AppCompatActivity {
             db.close();
         }
         else if (chosendb == 1){
+            tv.setText("Update company");
+
             inp1.setInputType(InputType.TYPE_CLASS_TEXT);
             inp1.setHint("Company Name");
 
@@ -110,6 +124,13 @@ public class update_remove extends AppCompatActivity {
 
     }
 
+    /**
+     * i made this function and an very proud of it thank you!
+     * taking a string id and checking if the first 8 characters match to the last digit according to the
+     * rules set by our beloved government.
+     * @param str the id in string form
+     * @return true if the id is valid
+     */
     public static boolean is_valid_id(String str){
         int last_dig = Integer.parseInt(String.valueOf(str.charAt(8)));
         int sum = 0;
@@ -129,10 +150,18 @@ public class update_remove extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * return to the database you came from
+     * @param view
+     */
     public void back_to_db(View view) {
         finish();
     }
 
+    /**
+     * send to the according save function
+     * @param view
+     */
     public void save(View view) {
         if (chosendb == 0) {
             save_worker(view);
@@ -142,6 +171,10 @@ public class update_remove extends AppCompatActivity {
         }
     }
 
+    /**
+     * check if the input matches up with the rules, update in the db and send back to the database activity
+     * @param view
+     */
     public void save_worker(View view) {
         if (inp1.getText().toString().matches("") || inp2.getText().toString().matches("") ||
                 inp3.getText().toString().matches("") || inp4.getText().toString().matches("") ||
@@ -186,6 +219,10 @@ public class update_remove extends AppCompatActivity {
 
     }
 
+    /**
+     * check if the input matches up with the rules, update in the db and send back to the database activity
+     * @param view
+     */
     public void save_company(View view) {
         if (inp1.getText().toString().matches("") || inp2.getText().toString().matches("") ||
                 inp3.getText().toString().matches("") || inp4.getText().toString().matches("")){

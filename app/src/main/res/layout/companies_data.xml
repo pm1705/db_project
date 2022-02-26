@@ -74,7 +74,7 @@
                 android:onClick="sort_choose"
                 android:text="Key Id"
                 android:textColor="#5E4F43"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:backgroundTint="#D3D0CB" />
 
             <Space
@@ -131,7 +131,7 @@
                 android:onClick="show_choose"
                 android:text="all fields"
                 android:textColor="#535353"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:backgroundTint="#D3D0CB" />
 
         </LinearLayout>

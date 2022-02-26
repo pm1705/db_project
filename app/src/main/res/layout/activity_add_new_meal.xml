@@ -24,14 +24,14 @@
             android:layout_weight="5" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/new_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="10"
             android:background="#E2C044"
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
-            android:text="Add New Worker"
+            android:text="Add New Order"
             android:textSize="30sp" />
 
         <Space

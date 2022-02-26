@@ -28,11 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="20"
-            android:background="#F1F1F1"
             android:fontFamily="monospace"
             android:text="TextView"
             android:textColor="#151515"
-            android:textSize="24sp" />
+            android:textSize="17sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -44,11 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="40"
-            android:background="#F1F1F1"
             android:fontFamily="monospace"
             android:text="TextView"
             android:textColor="#151515"
-            android:textSize="24sp" />
+            android:textSize="17sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -60,11 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="10"
-            android:background="#F1F1F1"
             android:fontFamily="monospace"
             android:text="TextView"
             android:textColor="#151515"
-            android:textSize="24sp" />
+            android:textSize="17sp" />
 
         <Space
             android:layout_width="match_parent"

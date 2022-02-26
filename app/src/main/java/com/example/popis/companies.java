@@ -1,5 +1,11 @@
 package com.example.popis;
 
+/**
+ * @author paz malul
+ *
+ * constants for company data base
+ */
+
 public class companies {
     public static final String TABLE_COMPANIES = "Companies";
     public static final String KEY_ID = "_id";

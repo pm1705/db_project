@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9FB1BC"
+    android:background="#dee0e6"
     tools:context=".MainActivity">
 
     <Space
@@ -52,7 +52,7 @@
             android:id="@+id/image_set1"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="20"
+            android:layout_weight="18"
             android:orientation="horizontal">
 
             <ImageButton
@@ -62,7 +62,7 @@
                 android:layout_weight="5"
                 android:background="#D3D0CB"
                 android:onClick="show_workers"
-                android:padding="40dp"
+                android:padding="30dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/users" />
 
@@ -78,7 +78,7 @@
                 android:layout_weight="5"
                 android:background="#D3D0CB"
                 android:onClick="show_companies"
-                android:padding="40dp"
+                android:padding="30dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/building" />
         </LinearLayout>
@@ -87,7 +87,7 @@
             android:id="@+id/text_set1"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="5"
+            android:layout_weight="7"
             android:orientation="horizontal">
 
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#e2c044"
+                android:background="#1ac0c6"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="WORKERS"
@@ -111,7 +111,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#e2c044"
+                android:background="#1ac0c6"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="COMPANIES"
@@ -127,7 +127,7 @@
             android:id="@+id/image_set2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="20"
+            android:layout_weight="18"
             android:orientation="horizontal">
 
             <ImageButton
@@ -138,7 +138,7 @@
                 android:background="#D3D0CB"
                 android:contentDescription="TODO"
                 android:onClick="show_orders"
-                android:padding="40dp"
+                android:padding="30dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/hamburger" />
 
@@ -154,7 +154,7 @@
                 android:layout_weight="5"
                 android:background="#D3D0CB"
                 android:onClick="add_order"
-                android:padding="40dp"
+                android:padding="30dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/plus" />
         </LinearLayout>
@@ -163,7 +163,7 @@
             android:id="@+id/text_set2"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="5"
+            android:layout_weight="7"
             android:orientation="horizontal">
 
             <TextView
@@ -171,7 +171,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#e2c044"
+                android:background="#1ac0c6"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="ORDERS"
@@ -187,7 +187,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#e2c044"
+                android:background="#1ac0c6"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
                 android:text="ADD ORDER"
