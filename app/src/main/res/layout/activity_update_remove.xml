@@ -32,6 +32,7 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
             android:text="Update Worker"
+            android:textColor="#5E4F43"
             android:textSize="30sp" />
 
         <Space
@@ -127,7 +128,9 @@
                 android:layout_weight="50"
                 android:background="#E2C044"
                 android:gravity="center"
-                android:text="ACTIVE" />
+                android:text="ACTIVE"
+                android:textColor="#5E4F43"
+                android:textStyle="bold" />
 
             <Space
                 android:layout_width="0dp"

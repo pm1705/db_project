@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -162,10 +163,12 @@ public class data_orders extends AppCompatActivity implements AdapterView.OnItem
 
             ContentValues cv = new ContentValues();
 
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
             cv.put(orders.WORKER_CARD_ID, card_id_back);
             cv.put(orders.COMPANY_ID, company_id_back);
-            cv.put(orders.TIME, Calendar.getInstance().getTime().toString());
+            cv.put(orders.TIME, formatter.format(calendar.getTime()));
             cv.put(orders.MEAL_DETAILS, meal_details);
 
             db = hlp.getWritableDatabase();

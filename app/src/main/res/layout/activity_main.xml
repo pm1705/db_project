@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dee0e6"
+    android:background="#9FB1BC"
     tools:context=".MainActivity">
 
     <Space
@@ -31,7 +31,11 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
             android:text="GYN-SUB"
-            android:textSize="48sp" />
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#515151"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/sub_title"
@@ -41,12 +45,14 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
             android:text="Gev-Yam Negev Food Tickets"
-            android:textSize="24sp" />
+            android:textColor="#515151"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10" />
+            android:layout_weight="8" />
 
         <LinearLayout
             android:id="@+id/image_set1"
@@ -95,10 +101,12 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#1ac0c6"
+                android:background="#E2C044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
+                android:onClick="show_workers"
                 android:text="WORKERS"
+                android:textColor="#5E4F43"
                 android:textSize="24sp" />
 
             <Space
@@ -111,17 +119,19 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#1ac0c6"
+                android:background="#E2C044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
+                android:onClick="show_companies"
                 android:text="COMPANIES"
+                android:textColor="#5E4F43"
                 android:textSize="24sp" />
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3" />
+            android:layout_weight="5" />
 
         <LinearLayout
             android:id="@+id/image_set2"
@@ -156,7 +166,8 @@
                 android:onClick="add_order"
                 android:padding="30dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/plus" />
+                android:src="@drawable/plus"
+                android:tint="#000000" />
         </LinearLayout>
 
         <LinearLayout
@@ -171,10 +182,12 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#1ac0c6"
+                android:background="#E2C044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
+                android:onClick="show_orders"
                 android:text="ORDERS"
+                android:textColor="#5E4F43"
                 android:textSize="24sp" />
 
             <Space
@@ -187,10 +200,12 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:background="#1ac0c6"
+                android:background="#E2C044"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
+                android:onClick="add_order"
                 android:text="ADD ORDER"
+                android:textColor="#5E4F43"
                 android:textSize="24sp" />
         </LinearLayout>
 

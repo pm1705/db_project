@@ -70,7 +70,7 @@ public class add_new_meal extends AppCompatActivity {
                 && drink.getText().toString().matches("")){
             Toast.makeText(this, "fill at least one meal detail", Toast.LENGTH_SHORT).show();
         }
-        else if (company_id.getText().toString().length() != 6 || card_id.getText().toString().matches("")){
+        else if (company_id.getText().toString().matches("") || card_id.getText().toString().matches("")){
             Toast.makeText(this, "Enter valid ids", Toast.LENGTH_SHORT).show();
         }
         else {

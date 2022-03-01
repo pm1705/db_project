@@ -11,9 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import static com.example.popis.orders.*;
 
@@ -81,20 +81,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int source, int good, @Nullable Intent data_back) {
         super.onActivityResult(source, good, data_back);
-        System.out.println(data_back);
         if (data_back != null){
             card_id_back = data_back.getStringExtra("card_id");
             company_id_back = data_back.getStringExtra("company_id");
             meal_details = data_back.getStringExtra("mealDetails");
-            System.out.println(meal_details);
 
             ContentValues cv = new ContentValues();
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
             cv.put(orders.WORKER_CARD_ID, card_id_back);
             cv.put(orders.COMPANY_ID, company_id_back);
-            cv.put(orders.TIME, formatter.toString());
+            cv.put(orders.TIME, formatter.format(calendar.getTime()));
             cv.put(orders.MEAL_DETAILS, meal_details);
 
             db = hlp.getWritableDatabase();

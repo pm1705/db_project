@@ -32,6 +32,7 @@
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
             android:text="Add New Worker"
+            android:textColor="#5E4F43"
             android:textSize="30sp" />
 
         <Space

@@ -174,7 +174,7 @@ public class add_new extends AppCompatActivity {
                 inp3.getText().toString().matches("") || inp4.getText().toString().matches("")){
             Toast.makeText(this, "Please fill out all fields.", Toast.LENGTH_SHORT).show();
         }
-        else if (inp3.getText().toString().length() != 9 && inp4.getText().toString().length() != 9){
+        else if (inp3.getText().toString().length() < 9 || inp4.getText().toString().length() < 9 || inp3.getText().toString().length() > 10 || inp4.getText().toString().length() > 10){
             Toast.makeText(this, "Enter valid phone Numbers", Toast.LENGTH_SHORT).show();
         }
         else {

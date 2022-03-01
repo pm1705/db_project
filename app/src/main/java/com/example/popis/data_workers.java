@@ -206,7 +206,7 @@ public class data_workers extends AppCompatActivity implements AdapterView.OnIte
         crsr.moveToFirst();
         while (!crsr.isAfterLast()) {
 
-            String tmp = crsr.getString(0) + ") ";
+            String tmp = "[" + crsr.getString(0) + "] ";
 
             for (int i=1;i<6;i++){
                 if (show_list[i-1] != -1){

@@ -75,7 +75,8 @@
             android:background="#FFFFFF"
             android:onClick="back_to_db"
             android:text="RETURN"
-            app:backgroundTint="#333333" />
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#000000" />
 
         <Space
             android:layout_width="match_parent"
